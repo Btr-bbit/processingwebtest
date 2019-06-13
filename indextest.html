@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)file:///D:/0%E7%BD%91%E9%A1%B5/indextest.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+ <title>清华大学美术学院</title> 
+ <meta http-equiv="Page-Enter" content="blendTrans(Duration=5)">
+<meta http-equiv="Page-Exit" content="blendTrans(Duration=5)" charset="utf-8">
+ 
+  <script src="processing.js"></script>
+
+<style>
+html { overflow-y: scroll; }
+.div-relative{position:relative; color:#000; border:1px solid #000; width:500px; height:400px} 
+.div-a{ position:absolute; left:30px; top:30px; background:#F00; width:200px; height:100px} 
+
+.div-b{ position:absolute;  width:100%; } 
+
+.div-c{ position:relative;  width:100%; } 
+
+body {
+  background-color: #eee;
+  overflow: hidden;
+  min-height: 185vh;
+}
+canvas {
+  background-color: #eee;
+  z-index: 0;
+  position : absolute;
+  display: block;
+  margin: 0 auto;
+}</style>
+ 
+ 
+ <style type="text/css">@font-face {
+  font-family: "PjsEmptyFont";
+  src: url('data:application/x-font-ttf;base64,AAEAAAAKAIAAAwAgT1MvMgAAAAAAAAEoAAAAVmNtYXAAAAAAAAABiAAAACxnbHlmAAAAAAAAAbwAAAAkaGVhZAAAAAAAAACsAAAAOGhoZWEAAAAAAAAA5AAAACRobXR4AAAAAAAAAYAAAAAGbG9jYQAAAAAAAAG0AAAABm1heHAAAAAAAAABCAAAACBuYW1lAAAAAAAAAeAAAAAgcG9zdAAAAAAAAAIAAAAAEAABAAAAAQAAAkgTY18PPPUACwAgAAAAALSRooAAAAAAyld0xgAAAAAAAQABAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEAAAACAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMAIwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAMAAQAAAAwABAAgAAAABAAEAAEAAABB//8AAABB////wAABAAAAAAAAAAgAEgAAAAEAAAAAAAAAAAAAAAAxAAABAAAAAAABAAEAAQAAMTcBAQAAAAAAAgAeAAMAAQQJAAEAAAAAAAMAAQQJAAIAAgAAAAAAAQAAAAAAAAAAAAAAAAAA')
+       format('truetype');
+}</style></head>
+ 
+ <body>
+ 
+
+<script type="text/processing" data-processing-target="processing-canvas">
+float theta, step;
+int num=5, frames = 1200;
+Layer[] layers = new Layer[num];
+ 
+void setup() {
+  size(1920, 1080);
+  step = (height-120)/num;
+  for (int i=0; i<num; i++) {
+    layers[i] = new Layer(-20+i*step, random(1000), i+1);
+  }
+}
+ 
+void draw() {
+  background(#ffffff);
+  for (int i=0; i<layers.length; i++) {
+    color col = lerpColor(#4A14C1,#ffffff,0.8-0.8/num*i);
+    fill(col);
+    layers[i].display();
+  }
+  theta += TWO_PI/frames;
+  
+  //if (frameCount%2==0 && frameCount<=frames) saveFrame("image-###.gif");
+}
+ 
+class Layer {
+ 
+  float start, noize, speed;
+  float yOff, yOff2;
+ 
+  Layer(float _start, float _noize, float _speed) {
+    start = _start;
+    noize = _noize;
+    speed = _speed;
+  }
+ 
+  void display() {
+    yOff = yOff2;
+    noStroke();
+    for (int x=0; x<width; x+=1) {
+      float y = start + noise(noize+sin(yOff)*3)*step*3.5;
+      rect(x,height,1,-height+y);
+      yOff+=TWO_PI/(width);
+    }
+    yOff2=theta*speed;
+  }
+}
+
+</script>
+
+<div class="div-b"><canvas id="processing-canvas" tabindex="0" width="1920" height="1080" style="image-rendering: -webkit-optimize-contrast !important;"> </canvas></div>
+<div class="div-c"><img src="主页.png"></div>
+<div class="div-b"><canvas id="processing-canvas"> </canvas></div>
+
+
+
+
+   
+ 
+ 
+<span style="position: absolute; top: 0px; left: 0px; opacity: 0; font-family: PjsEmptyFont, fantasy;">AAAAAAAA</span></body></html>
